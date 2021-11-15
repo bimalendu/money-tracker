@@ -21,8 +21,8 @@
             </div>
             @endif
             <button wire:click="create()"
-                class="my-4 inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base font-bold text-white shadow-sm hover:bg-red-700">
-                Create Expense
+                class="my-4 inline-flex justify-center float-right rounded-md border border-transparent px-4 py-2 bg-red-600 text-base font-bold text-white shadow-sm hover:bg-red-700">
+                Add Expense
             </button>
             @if($isModalOpen)
             @include('livewire.expense.create')
