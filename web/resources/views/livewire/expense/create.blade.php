@@ -22,41 +22,41 @@
                                 class="block text-gray-700 text-sm font-bold mb-2">Name</label>
                             <input type="text"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="exampleFormControlInput1" placeholder="Enter Name" wire:model="name">
-                            @error('name') <span class="text-red-500">{{ $message }}</span>@enderror
+                                id="exampleFormControlInput1" placeholder="Enter Name" wire:model.lazy="expense.name" required>
+                            @error('expense.name') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput2"
                                 class="block text-gray-700 text-sm font-bold mb-2">Description</label>
                             <textarea
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="exampleFormControlInput2" wire:model="description"
+                                id="exampleFormControlInput2" wire:model.lazy="expense.description"
                                 placeholder="Enter Description"></textarea>
-                            @error('description') <span class="text-red-500">{{ $message }}</span>@enderror
+                            @error('expense.description') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput3"
                                 class="block text-gray-700 text-sm font-bold mb-2">Amount</label>
                             <input type="text"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="exampleFormControlInput3" placeholder="Enter Amount" wire:model="amount">
-                            @error('amount') <span class="text-red-500">{{ $message }}</span>@enderror
+                                id="exampleFormControlInput3" placeholder="Enter Amount" wire:model.lazy="expense.amount" required>
+                            @error('expense.amount') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div> 
                         <div class="mb-4">
                             <label for="exampleFormControlInput4"
                                 class="block text-gray-700 text-sm font-bold mb-2">Tags</label>
                             <input type="text"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="exampleFormControlInput4" placeholder="Tags" wire:model="tags">
-                            @error('tags') <span class="text-red-500">{{ $message }}</span>@enderror
+                                id="exampleFormControlInput4" placeholder="Tags" wire:model.lazy="expense.tags">
+                            @error('expense.tags') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>      
                         <div class="mb-4">
                             <label for="exampleFormControlInput5"
                                 class="block text-gray-700 text-sm font-bold mb-2">Date</label>
                             <input type="date"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="exampleFormControlInput5" placeholder="Date" wire:model="date">
-                            @error('date') <span class="text-red-500">{{ $message }}</span>@enderror
+                                id="exampleFormControlInput5" placeholder="Date" wire:model.lazy="expense.on_date" required>
+                            @error('expense.on_date') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>                   
                     </div>
                 </div>

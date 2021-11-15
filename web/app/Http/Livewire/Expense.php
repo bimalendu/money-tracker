@@ -7,8 +7,17 @@ use App\Models\Expense as ExpenseModel;
 
 class Expense extends Component
 {
-    public $expense_id,$name,$description,$amount,$date,$tags;
     public $isModalOpen = 0;
+    public ExpenseModel $expense;
+
+    protected $rules = [
+        'expense.name' => 'required',
+        'expense.amount' => 'required',
+        'expense.description' =>'',
+        'expense.on_date' => 'required',
+        'expense.tags' => '',
+        
+    ];
     
     public function render()
     {
@@ -32,30 +41,16 @@ class Expense extends Component
     }
 
     private function resetCreateForm(){
-        $this->name = '';
-        $this->description = '';
-        $this->amount = '';
-        $this->date = '';
-        $this->tags = '';
+        $this->expense = new ExpenseModel;
+        $this->expense->on_date = date('Y-m-d',strtotime("now"));
     }
 
     public function store()
     {
-        $this->validate([
-            'name' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
-        ]);
-    
-        ExpenseModel::updateOrCreate(['id' => $this->id], [
-            'name' => $this->name,
-            'description' => $this->description,
-            'amount' => $this->amount,
-            'date' => $this->date,
-            'tags' => $this->tags,
-        ]);
+        $this->validate();
 
-        session()->flash('message', $this->id ? 'Expense updated.' : 'Expense created.');
+        session()->flash('message', isset($this->expense->id) ? 'Expense updated.' : 'Expense created.');
+        $this->expense->save();
 
         $this->closeModalPopover();
         $this->resetCreateForm();
@@ -64,12 +59,7 @@ class Expense extends Component
     public function edit($expense_id)
     {
         $expense = ExpenseModel::findOrFail($expense_id);
-        $this->id = $expense_id;
-        $this->name = $expense->name;
-        $this->description = $expense->description;
-        $this->amount = $expense->amount;
-        $this->tags = $expense->tags;
-        $this->date = $expense->created_at;
+        $this->expense = $expense;
         $this->openModalPopover();
     }
     

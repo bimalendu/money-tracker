@@ -18,6 +18,7 @@ class CreateExpenseTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->float('amount');
+            $table->date('on_date');
             $table->longText('tags')->nullable();
             $table->timestamps();
             $table->softDeletes();
