@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Expense as ExpenseModel;
+use App\Models\Tags;
 
 class Expense extends Component
 {
@@ -42,6 +43,7 @@ class Expense extends Component
 
     private function resetCreateForm(){
         $this->expense = new ExpenseModel;
+        $this->tags = Tags::all();
         $this->expense->on_date = date('Y-m-d',strtotime("now"));
     }
 
@@ -49,6 +51,19 @@ class Expense extends Component
     {
         $this->validate();
 
+        $tags = explode(",",strtolower($this->expense->tags));
+        foreach($tags as $tag){
+            $tag = trim($tag);
+            if(!empty($tag)){
+                Tags::updateOrCreate([
+                    "name" => $tag
+                ],
+                [
+                    "name" => $tag
+                ]);
+            }
+        }
+        
         session()->flash('message', isset($this->expense->id) ? 'Expense updated.' : 'Expense created.');
         $this->expense->save();
 
