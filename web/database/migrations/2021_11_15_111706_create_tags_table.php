@@ -15,9 +15,17 @@ class CreateTagsTable extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name')->index();
+            // Create the unsigned integer column in MySQL as usual
+            if (config('database.default') != 'sqlite') {
+                $table->integer('user_id')->unsigned()->index();
+            }
             $table->timestamps();
         });
+        // Add the column separately if it's SQLite
+        if (config('database.default') == 'sqlite') {
+            \DB::statement('ALTER TABLE tags ADD COLUMN user_id INTEGER NOT NULL DEFAULT 0 CHECK(user_id >= 0)');
+        }
     }
 
     /**

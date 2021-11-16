@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Expense as ExpenseModel;
 use App\Models\Tags;
+use Carbon\Carbon;
 
 class Expense extends Component
 {
@@ -23,7 +24,8 @@ class Expense extends Component
     
     public function render()
     {
-        $this->expenses = ExpenseModel::where('user_id', auth()->user()->id)->get();
+        $date = Carbon::now();
+        $this->expenses = ExpenseModel::where('user_id', auth()->user()->id)->where('on_date',$date->toDateString())->get();
         return view('livewire.expense.list');
     }
 
@@ -44,7 +46,7 @@ class Expense extends Component
 
     private function resetCreateForm(){
         $this->expense = new ExpenseModel;
-        $this->tags = Tags::all();
+        $this->tags = Tags::where('user_id', auth()->user()->id)->get();
         $this->expense->on_date = date('Y-m-d',strtotime("now"));
     }
 
@@ -55,10 +57,12 @@ class Expense extends Component
         $tag = trim($this->expense->tags);
         if(!empty($tag)){
             Tags::updateOrCreate([
-                "name" => $tag
+                "name" => $tag,
+                "user_id" => auth()->user()->id
             ],
             [
-                "name" => $tag
+                "name" => $tag,
+                "user_id" => auth()->user()->id
             ]);
         }
         
