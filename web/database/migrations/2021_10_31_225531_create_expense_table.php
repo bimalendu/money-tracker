@@ -20,10 +20,20 @@ class CreateExpenseTable extends Migration
             $table->float('amount');
             $table->date('on_date')->index();
             $table->mediumText('tags')->index();
-            $table->unsignedInteger('user_id')->index();
+            
+            // Create the unsigned integer column in MySQL as usual
+            if (config('database.default') != 'sqlite') {
+                $table->integer('user_id')->unsigned()->index();
+            }
+            
             $table->timestamps();
             $table->softDeletes();
         });
+
+        // Add the column separately if it's SQLite
+        if (config('database.default') == 'sqlite') {
+            \DB::statement('ALTER TABLE expenses ADD COLUMN user_id INTEGER NOT NULL DEFAULT 0 CHECK(user_id >= 0)');
+        }
     }
 
     /**
