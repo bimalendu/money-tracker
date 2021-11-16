@@ -20,6 +20,7 @@ class CreateExpenseTable extends Migration
             $table->float('amount');
             $table->date('on_date')->index();
             $table->mediumText('tags')->index();
+            $table->unsignedInteger('user_id')->index();
             $table->timestamps();
             $table->softDeletes();
         });

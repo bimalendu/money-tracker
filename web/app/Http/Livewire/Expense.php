@@ -14,6 +14,7 @@ class Expense extends Component
     protected $rules = [
         'expense.name' => 'required',
         'expense.amount' => 'required',
+        'expense.user_id' => '',
         'expense.description' =>'',
         'expense.on_date' => 'required',
         'expense.tags' => '',
@@ -22,7 +23,7 @@ class Expense extends Component
     
     public function render()
     {
-        $this->expenses = ExpenseModel::all();
+        $this->expenses = ExpenseModel::where('user_id', auth()->user()->id)->get();
         return view('livewire.expense.list');
     }
 
@@ -62,6 +63,7 @@ class Expense extends Component
         }
         
         session()->flash('message', isset($this->expense->id) ? 'Expense updated.' : 'Expense created.');
+        $this->expense->user_id = auth()->user()->id;
         $this->expense->save();
 
         $this->closeModalPopover();
