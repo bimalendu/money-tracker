@@ -15,11 +15,11 @@ class CreateExpenseTable extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->index();
             $table->text('description')->nullable();
             $table->float('amount');
-            $table->date('on_date');
-            $table->longText('tags')->nullable();
+            $table->date('on_date')->index();
+            $table->mediumText('tags')->index();
             $table->timestamps();
             $table->softDeletes();
         });

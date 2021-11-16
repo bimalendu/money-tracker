@@ -45,7 +45,7 @@
                         <td class="border px-4 py-2">{{ $expense->name }}</td>
                         <td class="border px-4 py-2">{{ $expense->description}}</td>
                         <td class="border px-4 py-2">{{ $expense->amount}}</td>
-                        <td class="border px-4 py-2">{{ $expense->tags}}</td>
+                        <td class="border px-4 py-2">{{ ucwords($expense->tags) }}</td>
                         <td class="border px-4 py-2">
                             <button wire:click="edit({{ $expense->id }})"
                                 class="flex px-4 py-2 bg-gray-500 text-gray-900 cursor-pointer">Edit</button>

@@ -51,17 +51,14 @@ class Expense extends Component
     {
         $this->validate();
 
-        $tags = explode(",",strtolower($this->expense->tags));
-        foreach($tags as $tag){
-            $tag = trim($tag);
-            if(!empty($tag)){
-                Tags::updateOrCreate([
-                    "name" => $tag
-                ],
-                [
-                    "name" => $tag
-                ]);
-            }
+        $tag = trim($this->expense->tags);
+        if(!empty($tag)){
+            Tags::updateOrCreate([
+                "name" => $tag
+            ],
+            [
+                "name" => $tag
+            ]);
         }
         
         session()->flash('message', isset($this->expense->id) ? 'Expense updated.' : 'Expense created.');
