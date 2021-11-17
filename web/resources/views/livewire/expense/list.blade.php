@@ -37,9 +37,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                            $totalExpenses = 0;
-                        @endphp
                         @foreach($expenses as $expense)
                         <tr>
                             <td class="border px-4 py-2">
@@ -48,7 +45,11 @@
                                     <small>{!! nl2br($expense->description) !!}</small>
                                 </p>
                             </td>
-                            <td class="border px-4 py-2">{{ $expense->price}}</td>
+                            <td class="border px-4 py-2">
+                                @php
+                                    echo format_money($expense->price);
+                                @endphp
+                            </td>
                             <td class="border px-4 py-2">
                                 <button wire:click="edit({{ $expense->id }})"
                                     class="flex px-4 py-2 bg-gray-500 text-gray-900 cursor-pointer">Edit</button>
@@ -67,8 +68,15 @@
                         </tr>
                         <tr>
                             <td colspan="1" class="border px-4 py-2 text-right"><strong> {{ __('Total Expenses') }}</stromg></td>
-                            <td colspan="2" class="border px-4 py-2"> <mark><strong >{{ $totalExpenses }} {{ __('INR') }}</strong></mark></td>
-                            
+                            <td colspan="2" class="border px-4 py-2"> 
+                                <mark>
+                                    <strong>
+                                        @php
+                                            echo format_money($totalExpenses);
+                                        @endphp
+                                    </strong>
+                                </mark>
+                            </td>
                         </tr>
                         <tr>
                             <td colspan="3">&nbsp;</td>

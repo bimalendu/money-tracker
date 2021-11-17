@@ -9,8 +9,9 @@ use Carbon\Carbon;
 
 class Expense extends Component
 {
-    public $isModalOpen = 0;
+    public $isModalOpen = 0, $tags=0;
     public ExpenseModel $expense;
+
 
     protected $rules = [
         'expense.name' => 'required',
@@ -24,9 +25,12 @@ class Expense extends Component
     
     public function render()
     {
-        $date = Carbon::now();
+        $date = Carbon::today();
         $this->expenses = ExpenseModel::where('user_id', auth()->user()->id)->where('on_date',$date->toDateString())->get();
-        return view('livewire.expense.list');
+        
+        return view('livewire.expense.list',[
+            "totalExpenses" => 0
+        ]);
     }
 
     public function create(){
@@ -37,6 +41,7 @@ class Expense extends Component
     public function openModalPopover()
     {
         $this->isModalOpen = true;
+        $this->tags = Tags::where('user_id', auth()->user()->id)->get();
     }
 
     public function closeModalPopover()
@@ -46,7 +51,6 @@ class Expense extends Component
 
     private function resetCreateForm(){
         $this->expense = new ExpenseModel;
-        $this->tags = Tags::where('user_id', auth()->user()->id)->get();
         $this->expense->on_date = date('Y-m-d',strtotime("now"));
     }
 
@@ -78,6 +82,7 @@ class Expense extends Component
     {
         $expense = ExpenseModel::findOrFail($expense_id);
         $this->expense = $expense;
+        $this->expense->price = format_money($this->expense->price);
         $this->openModalPopover();
     }
     
