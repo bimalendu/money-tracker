@@ -44,8 +44,8 @@
                         <tr>
                             <td class="border px-4 py-2">
                                 <h3>{{ $expense->name }}</h3>
-                                <p>
-                                    <small>{{ $expense->description }}</small>
+                                <p class="mx-3">
+                                    <small>{!! nl2br($expense->description) !!}</small>
                                 </p>
                             </td>
                             <td class="border px-4 py-2">{{ $expense->price}}</td>
