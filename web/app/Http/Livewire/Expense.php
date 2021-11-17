@@ -14,7 +14,7 @@ class Expense extends Component
 
     protected $rules = [
         'expense.name' => 'required',
-        'expense.amount' => 'required',
+        'expense.price' => 'required',
         'expense.user_id' => '',
         'expense.description' =>'',
         'expense.on_date' => 'required',

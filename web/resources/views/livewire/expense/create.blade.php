@@ -19,35 +19,35 @@
 
                         <div class="mb-4">
                             <label for="exampleFormControlInput1"
-                                class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                                class="block text-gray-700 text-sm font-bold mb-2"><abbr title="Please enter the name of the item">Name</abbr></label>
                             <input type="text"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="exampleFormControlInput1" placeholder="Enter Name" wire:model.lazy="expense.name" required>
+                                id="exampleFormControlInput1" placeholder="Name of the item" wire:model.lazy="expense.name" required>
                             @error('expense.name') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput2"
-                                class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+                                class="block text-gray-700 text-sm font-bold mb-2"><abbr title="Please enter more information about the purchased item">Description</abbr></label>
                             <textarea
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="exampleFormControlInput2" wire:model.lazy="expense.description"
-                                placeholder="Enter Description"></textarea>
+                                placeholder="More information about the item purchased"></textarea>
                             @error('expense.description') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput3"
-                                class="block text-gray-700 text-sm font-bold mb-2">Amount</label>
+                                class="block text-gray-700 text-sm font-bold mb-2"><abbr title="Please enter the price of the item">Price</abbr></label>
                             <input type="text"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="exampleFormControlInput3" placeholder="Enter Amount" wire:model.lazy="expense.amount" required>
-                            @error('expense.amount') <span class="text-red-500">{{ $message }}</span>@enderror
+                                id="exampleFormControlInput3" placeholder="Price of the item" wire:model.lazy="expense.price" required>
+                            @error('expense.price') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div> 
                         <div class="mb-4">
                             <label for="exampleFormControlInput4"
-                                class="block text-gray-700 text-sm font-bold mb-2">Tags</label>
+                                class="block text-gray-700 text-sm font-bold mb-2"><abbr title="Please mention a category for the item purchased">Tags</abbr></label>
                             <input type="text"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                id="exampleFormControlInput4" placeholder="Tags" wire:model.lazy="expense.tags" list="tags">
+                                id="exampleFormControlInput4" placeholder="Purchase Category" wire:model.lazy="expense.tags" list="tags">
                             <datalist id="tags">
                                 @foreach($tags as $tag)
                                     <option value="{{ ucwords($tag->name) }}">
@@ -57,7 +57,7 @@
                         </div>      
                         <div class="mb-4">
                             <label for="exampleFormControlInput5"
-                                class="block text-gray-700 text-sm font-bold mb-2">Date</label>
+                                class="block text-gray-700 text-sm font-bold mb-2">Purchased on</label>
                             <input type="date"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="exampleFormControlInput5" placeholder="Date" wire:model.lazy="expense.on_date" required>

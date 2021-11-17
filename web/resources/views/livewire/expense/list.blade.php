@@ -31,10 +31,8 @@
                 <table class="table-fixed w-full">
                     <thead>
                         <tr class="bg-gray-100">
-                            <th class="px-4 py-2 text-left">Name</th>
-                            <th class="px-4 py-2 text-left">Description</th>
-                            <th class="px-4 py-2 text-left">Amount</th>
-                            <th class="px-4 py-2 text-left">Tags</th>
+                            <th class="px-4 py-2 text-left">Item</th>
+                            <th class="px-4 py-2 text-left">Price</th>
                             <th class="px-4 py-2 text-left">Action</th>
                         </tr>
                     </thead>
@@ -44,10 +42,13 @@
                         @endphp
                         @foreach($expenses as $expense)
                         <tr>
-                            <td class="border px-4 py-2">{{ $expense->name }}</td>
-                            <td class="border px-4 py-2">{{ $expense->description}}</td>
-                            <td class="border px-4 py-2">{{ $expense->amount}}</td>
-                            <td class="border px-4 py-2">{{ ucwords($expense->tags) }}</td>
+                            <td class="border px-4 py-2">
+                                <h3>{{ $expense->name }}</h3>
+                                <p>
+                                    <small>{{ $expense->description }}</small>
+                                </p>
+                            </td>
+                            <td class="border px-4 py-2">{{ $expense->price}}</td>
                             <td class="border px-4 py-2">
                                 <button wire:click="edit({{ $expense->id }})"
                                     class="flex px-4 py-2 bg-gray-500 text-gray-900 cursor-pointer">Edit</button>
@@ -56,25 +57,25 @@
                             </td>
                         </tr>
                         @php
-                        $totalExpenses += $expense->amount;
+                        $totalExpenses += $expense->price;
                         @endphp
                         @endforeach
 
                         @if($totalExpenses > 0)
                         <tr>
-                            <td colspan="5" class="border">&nbsp;</td>
+                            <td colspan="3" class="border">&nbsp;</td>
                         </tr>
                         <tr>
-                            <td colspan="2" class="border px-4 py-2 text-right"><strong> {{ __('Total Expenses') }}</stromg></td>
-                            <td colspan="3" class="border px-4 py-2"> <mark><strong >{{ $totalExpenses }} {{ __('INR') }}</strong></mark></td>
+                            <td colspan="1" class="border px-4 py-2 text-right"><strong> {{ __('Total Expenses') }}</stromg></td>
+                            <td colspan="2" class="border px-4 py-2"> <mark><strong >{{ $totalExpenses }} {{ __('INR') }}</strong></mark></td>
                             
                         </tr>
                         <tr>
-                            <td colspan="5">&nbsp;</td>
+                            <td colspan="3">&nbsp;</td>
                         </tr>
                         @else
                         <tr>
-                            <td colspan="5" class="border text-center px-4 py-2">Please add expenses to view them here</td>
+                            <td colspan="3" class="border text-center px-4 py-2">Please add expenses to view them here</td>
                         </tr>
                         @endif
                     </tbody>

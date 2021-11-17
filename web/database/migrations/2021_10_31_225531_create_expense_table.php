@@ -17,7 +17,7 @@ class CreateExpenseTable extends Migration
             $table->id();
             $table->string('name')->index();
             $table->text('description')->nullable();
-            $table->float('amount');
+            $table->float('price');
             $table->date('on_date')->index();
             $table->mediumText('tags')->index();
             
