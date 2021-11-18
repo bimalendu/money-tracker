@@ -17,7 +17,7 @@ MoneyTracker was created to improve financial literacy and to lead you towards p
 
 MoneyTracker was built by me as a side hustle and also to track my personal finances. If you want regular updates and new features in this software then please support my efforts by buying me a coffee.
 
-<a href="https://www.buymeacoffee.com/bimalendu" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+<img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174">](https://www.buymeacoffee.com/bimalendu){target="_blank"}
 
 ## Contributing
 
@@ -25,7 +25,7 @@ Thank you for considering contributing to MoneyTracker. This space will be updat
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within MoneyTracker, please send an e-mail to Bimalendu Behera via [bimalendu@ekakshya.com](mailto:bimalendu@ekakshya.com). All security vulnerabilities will be addressed promptly.
+If you discover a security vulnerability within MoneyTracker, please send an e-mail to Bimalendu Behera via [bimalendu.behera@gmail.com](mailto:bimalendu.behera@gmail.com). All security vulnerabilities will be addressed promptly.
 
 ## License
 
