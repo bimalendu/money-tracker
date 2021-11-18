@@ -11,7 +11,7 @@ MoneyTracker is a web application built with Laravel 8. Some features of Money T
 
 ## Why MoneyTracker
 
-MoneyTracker was created to improve financial literacy and lead you towards positive financial health. When you are aware of your spending habits then that information can be used to plan your budgets effectively.
+MoneyTracker was created to improve financial literacy and to lead you towards positive financial health. When you are aware of your spending habits then that information can be used to plan your budgets effectively.
 
 ## Sponsor MoneyTracker
 
