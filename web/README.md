@@ -7,7 +7,7 @@ MoneyTracker is a web application built with Laravel 8. Some features of Money T
 - Supports multiple currencies
 - Database agnostic. 
 - UI uses Tailwind CSS.
-- Application logic is powered with LiveWire
+- Application logic is powered by LiveWire
 
 ## Why MoneyTracker
 
