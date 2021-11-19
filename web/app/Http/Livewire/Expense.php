@@ -6,12 +6,12 @@ use Livewire\Component;
 use App\Models\Expense as ExpenseModel;
 use App\Models\Tags;
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 
 class Expense extends Component
 {
-    public $isModalOpen = 0, $tags=0;
+    public $isModalOpen = 0, $tags=0, $selDate = '', $timePeriod = '';
     public ExpenseModel $expense;
-
 
     protected $rules = [
         'expense.name' => 'required',
@@ -26,7 +26,17 @@ class Expense extends Component
     public function render()
     {
         $date = Carbon::today();
-        $this->expenses = ExpenseModel::where('user_id', auth()->user()->id)->where('on_date',$date->toDateString())->get();
+        if(empty($this->selDate)){
+            $this->selDate = $date->toDateString();
+        }
+
+        $this->timePeriod = $date;
+        $this->timePeriod = $this->timePeriod->diffForHumans(Carbon::parse($this->selDate), [
+            'syntax' => CarbonInterface::DIFF_RELATIVE_TO_NOW,
+            'options' => Carbon::JUST_NOW | Carbon::ONE_DAY_WORDS | Carbon::TWO_DAY_WORDS,
+        ]);
+
+        $this->expenses = ExpenseModel::where('user_id', auth()->user()->id)->where('on_date',$this->selDate)->get();
         
         return view('livewire.expense.list',[
             "totalExpenses" => 0
@@ -90,5 +100,17 @@ class Expense extends Component
     {
         ExpenseModel::find($expense_id)->delete();
         session()->flash('message', 'Expense deleted.');
+    }
+
+    public function updateExpenseView(){
+        $date = Carbon::today();
+        $this->timePeriod = $date;
+        $this->timePeriod = $this->timePeriod->diffForHumans(Carbon::parse($this->selDate), [
+            'syntax' => CarbonInterface::DIFF_RELATIVE_TO_NOW,
+            'options' => Carbon::JUST_NOW | Carbon::ONE_DAY_WORDS | Carbon::TWO_DAY_WORDS,
+        ]);
+        
+        $this->expenses = ExpenseModel::where('user_id', auth()->user()->id)->where('on_date',$this->selDate)->get();
+        
     }
 }

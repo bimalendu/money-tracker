@@ -1,8 +1,9 @@
-    <x-slot name="header">
+
+<x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Todays Expense') }}
-        </h2>
-    </x-slot>
+                {{ __('Expense ') }} {{ $timePeriod}}
+        </h2> 
+</x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -20,13 +21,15 @@
             </div>
             @endif
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
+        
+                <input type="date" wire:model="selDate" class="form-input mt-2 mb-4" placeholder="Choose Date" wire:change="updateExpenseView()">
            
                 <button wire:click="create()"
                     class="my-4 inline-flex  float-right rounded-md border border-transparent px-4 py-2 bg-red-600 text-base font-bold text-white shadow-sm hover:bg-red-700">
                     Add Expense
                 </button>
                 @if($isModalOpen)
-                @include('livewire.expense.create')
+                    @include('livewire.expense.create')
                 @endif
                 <table class="table-fixed w-full">
                     <thead>
@@ -58,7 +61,7 @@
                             </td>
                         </tr>
                         @php
-                        $totalExpenses += $expense->price;
+                            $totalExpenses += $expense->price;
                         @endphp
                         @endforeach
 
