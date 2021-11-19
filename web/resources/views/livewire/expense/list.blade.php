@@ -1,7 +1,7 @@
 
 <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Expense ') }} {{ $timePeriod}}
+            {{ $timePeriod}} {{ __('Expense ') }} 
         </h2> 
 </x-slot>
 
@@ -22,7 +22,10 @@
             @endif
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
         
-                <input type="date" wire:model="selDate" class="form-input mt-2 mb-4" placeholder="Choose Date" wire:change="updateExpenseView()">
+                <input type="text" wire:model="searchQuery" class="form-input mt-2 mb-4" placeholder="Search">
+                <input type="date" wire:model="selDate" class="form-input mt-2 mb-4" placeholder="Choose Date">
+                <input type="number" wire:model.lazy="itemsPerPage" class="form-input mt-2 mb-4" placeholder="Items Per Page" min="0">
+                
            
                 <button wire:click="create()"
                     class="my-4 inline-flex  float-right rounded-md border border-transparent px-4 py-2 bg-red-600 text-base font-bold text-white shadow-sm hover:bg-red-700">
@@ -61,7 +64,7 @@
                             </td>
                         </tr>
                         @php
-                            $totalExpenses += $expense->price;
+                            $totalExpenses += floatval($expense->price);
                         @endphp
                         @endforeach
 
@@ -91,6 +94,7 @@
                         @endif
                     </tbody>
                 </table>
+                {{ $expenses->links() }}
         </div>
     </div>
 </div>

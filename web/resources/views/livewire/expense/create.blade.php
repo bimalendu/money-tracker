@@ -36,7 +36,7 @@
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput3"
-                                class="block text-gray-700 text-sm font-bold mb-2"><abbr title="Please enter the price of the item">Price</abbr></label>
+                                class="block text-gray-700 text-sm font-bold mb-2"><abbr title="Please enter the price of the item">Price({{ currency_symbol()}})</abbr></label>
                             <input type="text"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="exampleFormControlInput3" placeholder="Price of the item" wire:model.lazy="expense.price" required>

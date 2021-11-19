@@ -7,10 +7,13 @@ use App\Models\Expense as ExpenseModel;
 use App\Models\Tags;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Livewire\WithPagination;
 
 class Expense extends Component
 {
-    public $isModalOpen = 0, $tags=0, $selDate = '', $timePeriod = '';
+    use WithPagination;
+
+    public $isModalOpen = 0, $tags=0, $selDate = '', $searchQuery='', $itemsPerPage = 5;
     public ExpenseModel $expense;
 
     protected $rules = [
@@ -25,21 +28,27 @@ class Expense extends Component
     
     public function render()
     {
-        $date = Carbon::today();
-        if(empty($this->selDate)){
-            $this->selDate = $date->toDateString();
+
+        if($this->itemsPerPage ==''){
+            $this->itemsPerPage = 0;
+        }else if($this->itemsPerPage < 0){
+            $this->itemsPerPage = abs($this->itemsPerPage);
         }
 
-        $this->timePeriod = $date;
-        $this->timePeriod = $this->timePeriod->diffForHumans(Carbon::parse($this->selDate), [
-            'syntax' => CarbonInterface::DIFF_RELATIVE_TO_NOW,
-            'options' => Carbon::JUST_NOW | Carbon::ONE_DAY_WORDS | Carbon::TWO_DAY_WORDS,
-        ]);
+        $expenses = ExpenseModel::where('user_id', auth()->user()->id)
+                    ->when($this->selDate!='', function($query) {
+                        $query->whereDate('on_date', $this->selDate);
+                    })
+                    ->when($this->searchQuery!='', function($query) {
+                        $query->where('name', 'like', '%'.$this->searchQuery.'%');
+                        $query->orWhere('tags', 'like', '%'.$this->searchQuery.'%');
+                    })
+                    ->paginate($this->itemsPerPage);
 
-        $this->expenses = ExpenseModel::where('user_id', auth()->user()->id)->where('on_date',$this->selDate)->get();
-        
         return view('livewire.expense.list',[
-            "totalExpenses" => 0
+            "totalExpenses" => 0,
+            "expenses" => $expenses,
+            "timePeriod" => "Today's",
         ]);
     }
 
@@ -81,6 +90,7 @@ class Expense extends Component
         }
         
         session()->flash('message', isset($this->expense->id) ? 'Expense updated.' : 'Expense created.');
+        $this->expense->price = floatval($this->expense->price);
         $this->expense->user_id = auth()->user()->id;
         $this->expense->save();
 
@@ -92,7 +102,7 @@ class Expense extends Component
     {
         $expense = ExpenseModel::findOrFail($expense_id);
         $this->expense = $expense;
-        $this->expense->price = format_money($this->expense->price);
+        $this->expense->price = round($this->expense->price,2);
         $this->openModalPopover();
     }
     
@@ -102,15 +112,5 @@ class Expense extends Component
         session()->flash('message', 'Expense deleted.');
     }
 
-    public function updateExpenseView(){
-        $date = Carbon::today();
-        $this->timePeriod = $date;
-        $this->timePeriod = $this->timePeriod->diffForHumans(Carbon::parse($this->selDate), [
-            'syntax' => CarbonInterface::DIFF_RELATIVE_TO_NOW,
-            'options' => Carbon::JUST_NOW | Carbon::ONE_DAY_WORDS | Carbon::TWO_DAY_WORDS,
-        ]);
-        
-        $this->expenses = ExpenseModel::where('user_id', auth()->user()->id)->where('on_date',$this->selDate)->get();
-        
-    }
+    
 }
