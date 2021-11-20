@@ -13,7 +13,7 @@ class Expense extends Component
 {
     use WithPagination;
 
-    public $isModalOpen = 0, $tags=0, $selDate = '', $searchQuery='', $itemsPerPage = 5;
+    public $isModalOpen = 0, $tags=0, $selDate = '', $searchQuery='', $itemsPerPage = 0;
     public ExpenseModel $expense;
 
     protected $rules = [
@@ -25,16 +25,15 @@ class Expense extends Component
         'expense.tags' => '',
         
     ];
+
+    public function mount()
+    {
+        $this->selDate = Carbon::now()->format('Y-m-d');
+        $this->itemsPerPage = 5;
+    }
     
     public function render()
     {
-
-        if($this->itemsPerPage ==''){
-            $this->itemsPerPage = 0;
-        }else if($this->itemsPerPage < 0){
-            $this->itemsPerPage = abs($this->itemsPerPage);
-        }
-
         $expenses = ExpenseModel::where('user_id', auth()->user()->id)
                     ->when($this->selDate!='', function($query) {
                         $query->whereDate('on_date', $this->selDate);

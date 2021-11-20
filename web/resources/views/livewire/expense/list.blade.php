@@ -20,20 +20,31 @@
                 </div>
             </div>
             @endif
+            <div wire:loading>
+                    Please Wait, Loading Data...
+            </div>
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
-        
+           
                 <input type="text" wire:model="searchQuery" class="form-input mt-2 mb-4" placeholder="Search">
                 <input type="date" wire:model="selDate" class="form-input mt-2 mb-4" placeholder="Choose Date">
-                <input type="number" wire:model.lazy="itemsPerPage" class="form-input mt-2 mb-4" placeholder="Items Per Page" min="0">
+                <select wire:model="itemsPerPage" class="form-input">
+                    <optgroup label="No. of items per page">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="0">All</option>
+                    </optgroup>
+                </select>
                 
            
                 <button wire:click="create()"
                     class="my-4 inline-flex  float-right rounded-md border border-transparent px-4 py-2 bg-red-600 text-base font-bold text-white shadow-sm hover:bg-red-700">
                     Add Expense
                 </button>
-                @if($isModalOpen)
-                    @include('livewire.expense.create')
-                @endif
+               
+                
                 <table class="table-fixed w-full">
                     <thead>
                         <tr class="bg-gray-100">
@@ -59,7 +70,7 @@
                             <td class="border px-4 py-2">
                                 <button wire:click="edit({{ $expense->id }})"
                                     class="flex px-4 py-2 bg-gray-500 text-gray-900 cursor-pointer">Edit</button>
-                                <button wire:click="delete({{ $expense->id }})"
+                                <button onclick="return confirm('Do you want to delete this expense ?') || event.stopImmediatePropagation()"wire:click="delete({{ $expense->id }})"
                                     class="flex px-4 py-2 bg-red-100 text-gray-900 cursor-pointer">Delete</button>
                             </td>
                         </tr>
@@ -95,10 +106,14 @@
                     </tbody>
                 </table>
                 {{ $expenses->links() }}
+                @if($isModalOpen)
+                    @include('livewire.expense.create')
+                @endif
         </div>
     </div>
 </div>
             </div>
         </div>
     </div>
+    
 
