@@ -1,7 +1,3 @@
-@php
-    $state['currency'] = session('currency');
-@endphp
-
 <x-jet-form-section submit="updateProfileInformation">
     <x-slot name="title">
         {{ __('Profile Information') }}
@@ -74,16 +70,9 @@
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="currency" value="{{ __('Currency') }}" />
             <x-jet-input id="currency" type="text" class="mt-1 block w-full" wire:model.defer="state.currency" list="currencies" />
-            <p class="text-gray-500 text-xs mt-1">Enter country name to set the currency</p>
+            <p class="text-gray-500 text-xs mt-1">Enter country name to set the currency like: India for INR</p>
             <x-jet-input-error for="currency" class="mt-2" />
-            <datalist id="currencies">
-                @php
-                    $currencies = \App\Models\Currencies::all();
-                @endphp
-                @foreach ($currencies as $currency)
-                    <option value="{{ $currency->currency_code }}">{{ $currency->country }}</option>
-                @endforeach
-            </datalist>
+            
         </div>
     </x-slot>
 

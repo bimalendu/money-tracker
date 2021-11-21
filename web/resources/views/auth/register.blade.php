@@ -22,12 +22,8 @@
             <div class="mt-4">
                 <x-jet-label for="currency" value="{{ __('Currency') }}" />
                 <x-jet-input id="currency" class="block mt-1 w-full" type="text" name="currency" :value="old('currency')" required list="currencies" />
-                <p class="text-gray-500 text-xs mt-1">Enter country name to set the currency</p>
-                <datalist id="currencies">
-                    @foreach($currencies as $currency)
-                        <option value="{{ $currency->currency_code }}">{{ $currency->country }}</option>
-                    @endforeach
-                </datalist>
+                <p class="text-gray-500 text-xs mt-1">Enter country name to set the currency like: India for INR</p>
+                @include('currencies',["currencies"=>$currencies])
             </div>
 
             <div class="mt-4">

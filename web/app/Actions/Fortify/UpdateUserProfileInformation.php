@@ -40,9 +40,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             ])->save();
         }
 
-        if ($input['currency'] !== $user->currency) {
-            session('currency', $input['currency']);
-        }
+        session(['currency' => $input['currency']]);
+        
     }
 
     /**
