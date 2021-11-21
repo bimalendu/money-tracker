@@ -4,7 +4,6 @@ namespace App\Actions\Fortify;
 
 use App\Models\Team;
 use App\Models\User;
-use App\Models\UserCurrency;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -35,13 +34,10 @@ class CreateNewUser implements CreatesNewUsers
             return tap(User::create([
                 'name' => $input['name'],
                 'email' => $input['email'],
+                'currency' => $input['currency'],
                 'password' => Hash::make($input['password']),
-            ]), function (User $user) use ($input) {
+            ]), function (User $user) {
                 $this->createTeam($user);
-                $this->createUserCurrency([
-                    "user_id" => $user->id,
-                    "currency" => $input['currency'],
-                ]);
             });
         });
     }
@@ -59,12 +55,5 @@ class CreateNewUser implements CreatesNewUsers
             'name' => explode(' ', $user->name, 2)[0]."'s Team",
             'personal_team' => true,
         ]));
-    }
-
-    protected function createUserCurrency($data){
-        UserCurrency::create([
-            'user_id' => $data['user_id'],
-            'currency' => $data['currency'],
-        ]);
     }
 }

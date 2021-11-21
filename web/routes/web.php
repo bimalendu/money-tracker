@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Expense;
-use App\Models\UserCurrency;
 
 /*
 |--------------------------------------------------------------------------

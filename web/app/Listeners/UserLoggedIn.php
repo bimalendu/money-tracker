@@ -5,7 +5,6 @@ namespace App\Listeners;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Models\UserCurrency;
 
 class UserLoggedIn
 {
@@ -27,7 +26,6 @@ class UserLoggedIn
      */
     public function handle(Login $event)
     {
-        $record = new UserCurrency();
-        session(['currency' => $record->getCurrency()]);
+        session(['currency' => auth()->user()->currency]);
     }
 }
