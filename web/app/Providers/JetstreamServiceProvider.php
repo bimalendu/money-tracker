@@ -11,6 +11,7 @@ use App\Actions\Jetstream\RemoveTeamMember;
 use App\Actions\Jetstream\UpdateTeamName;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Cache;
 use Laravel\Jetstream\Jetstream;
 use Laravel\Fortify\Fortify;
 use App\Models\Currencies;
@@ -46,8 +47,13 @@ class JetstreamServiceProvider extends ServiceProvider
         Jetstream::deleteUsersUsing(DeleteUser::class);
 
         Fortify::registerView(function () {
+            
+            $data = Cache::get('currencies', function () {
+                return Currencies::select('currency_code','currency')->distinct()->get();
+            });
+
             return view('auth.register',[
-                "currencies" => Currencies::all(),
+                "currencies" => $data,
             ]);
         });
     }
