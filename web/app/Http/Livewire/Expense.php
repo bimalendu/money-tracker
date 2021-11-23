@@ -42,6 +42,13 @@ class Expense extends Component
                         $query->where('name', 'like', '%'.$this->searchQuery.'%');
                         $query->orWhere('tags', 'like', '%'.$this->searchQuery.'%');
                     })
+                    ->when($this->searchQuery !='' && $this->selDate!='', function($query) {
+                        $query->whereDate('on_date', $this->selDate)
+                              ->where(function ($secondQuery) {
+                                    $secondQuery->where('name', 'like', '%'.$this->searchQuery.'%')
+                                                ->orWhere('tags', 'like', '%'.$this->searchQuery.'%');
+                             });
+                    })
                     ->paginate($this->itemsPerPage);
 
         return view('livewire.expense.list',[

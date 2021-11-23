@@ -100,7 +100,12 @@
                         </tr>
                         @else
                         <tr>
-                            <td colspan="3" class="border text-center px-4 py-2">Please add expenses to view them here</td>
+                            @if($searchQuery!='')
+                                <td colspan="3" class="borde text-center px-4 py-2">No results found for <q>{{ $searchQuery }}</q></td>
+                            @else
+                                <td colspan="3" class="border text-center px-4 py-2">Please add expenses to view them here</td>
+                            @endif
+                            
                         </tr>
                         @endif
                     </tbody>
