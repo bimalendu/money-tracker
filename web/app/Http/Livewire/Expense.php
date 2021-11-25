@@ -34,7 +34,8 @@ class Expense extends Component
     
     public function render()
     {
-        $expenses = ExpenseModel::where('user_id', auth()->user()->id)
+        $expenses = ExpenseModel::select()
+                    ->where('user_id', auth()->user()->id)
                     ->when($this->selDate!='', function($query) {
                         $query->whereDate('on_date', $this->selDate);
                     })
@@ -48,11 +49,12 @@ class Expense extends Component
                                     $secondQuery->where('name', 'like', '%'.$this->searchQuery.'%')
                                                 ->orWhere('tags', 'like', '%'.$this->searchQuery.'%');
                              });
-                    })
-                    ->paginate($this->itemsPerPage);
+                    });
+        $totalExpenses = $expenses->sum('price');
+        $expenses = $expenses->paginate($this->itemsPerPage);
 
         return view('livewire.expense.list',[
-            "totalExpenses" => 0,
+            "totalExpenses" => $totalExpenses,
             "expenses" => $expenses,
             "timePeriod" => "Today's",
         ]);
