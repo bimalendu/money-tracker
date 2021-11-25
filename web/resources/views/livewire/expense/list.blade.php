@@ -26,7 +26,7 @@
             <div class="px-4 py-4 overflow-hidden bg-white shadow-xl sm:rounded-lg">
            
                 <input type="text" wire:model="searchQuery" class="mt-2 mb-4 form-input" placeholder="Search">
-                <input type="date" wire:model="selDate" class="mt-2 mb-4 form-input" placeholder="Choose Date">
+                <input type="date" wire:model="selDate" class="mt-2 mb-4 form-input" placeholder="Choose Date" max="@php echo date("Y-m-d"); @endphp">
                 <select wire:model="itemsPerPage" class="form-input">
                     <optgroup label="No. of items per page">
                         <option value="5">5</option>
@@ -83,13 +83,13 @@
                         <tr>
                             <td colspan="1" class="px-4 py-2 text-right border"><strong> {{ __('Total Expenses') }}</stromg></td>
                             <td colspan="2" class="px-4 py-2 border"> 
-                                <mark>
+                                
                                     <strong>
                                         @php
                                             echo format_money($totalExpenses);
                                         @endphp
                                     </strong>
-                                </mark>
+                                
                             </td>
                         </tr>
                         <tr>
