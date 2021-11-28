@@ -50,7 +50,7 @@ class Income extends Component
                              });
                     });
         $totalIncome = $incomeRecords->sum('price');
-        $income = $incomeRecords->paginate($this->itemsPerPage);
+        $incomeRecords = $incomeRecords->paginate($this->itemsPerPage);
 
         return view('livewire.income.list',[
             "totalIncome" => $totalIncome,
@@ -67,7 +67,9 @@ class Income extends Component
     public function openModalPopover()
     {
         $this->isModalOpen = true;
-        $this->tags = Tags::where('user_id', auth()->user()->id)->get();
+        $this->tags = Tags::where('user_id', auth()->user()->id)
+                      ->where('type', 1)
+                      ->get();
     }
 
     public function closeModalPopover()
@@ -88,11 +90,13 @@ class Income extends Component
         if(!empty($tag)){
             Tags::updateOrCreate([
                 "name" => $tag,
-                "user_id" => auth()->user()->id
+                "user_id" => auth()->user()->id,
+                "type" => 1,
             ],
             [
                 "name" => $tag,
-                "user_id" => auth()->user()->id
+                "user_id" => auth()->user()->id,
+                "type" => 1,
             ]);
         }
         

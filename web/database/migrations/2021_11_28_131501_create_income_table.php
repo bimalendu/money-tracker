@@ -13,7 +13,7 @@ class CreateIncomeTable extends Migration
      */
     public function up()
     {
-        Schema::create('income', function (Blueprint $table) {
+        Schema::create('incomes', function (Blueprint $table) {
             $table->id();
             $table->string('name')->index();
             $table->text('description')->nullable();
@@ -31,7 +31,7 @@ class CreateIncomeTable extends Migration
 
         // Add the column separately if it's SQLite
         if (config('database.default') == 'sqlite') {
-            \DB::statement('ALTER TABLE income ADD COLUMN user_id INTEGER NOT NULL DEFAULT 0 CHECK(user_id >= 0)');
+            \DB::statement('ALTER TABLE incomes ADD COLUMN user_id INTEGER NOT NULL DEFAULT 0 CHECK(user_id >= 0)');
         }
     }
 
@@ -42,6 +42,6 @@ class CreateIncomeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('income');
+        Schema::dropIfExists('incomes');
     }
 }

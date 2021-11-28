@@ -67,7 +67,9 @@ class Expense extends Component
     public function openModalPopover()
     {
         $this->isModalOpen = true;
-        $this->tags = Tags::where('user_id', auth()->user()->id)->get();
+        $this->tags = Tags::where('user_id', auth()->user()->id)
+                      ->where('type', 0)
+                      ->get();
     }
 
     public function closeModalPopover()
@@ -88,11 +90,13 @@ class Expense extends Component
         if(!empty($tag)){
             Tags::updateOrCreate([
                 "name" => $tag,
-                "user_id" => auth()->user()->id
+                "user_id" => auth()->user()->id,
+                "type" => 0,
             ],
             [
                 "name" => $tag,
-                "user_id" => auth()->user()->id
+                "user_id" => auth()->user()->id,
+                "type" => 0,
             ]);
         }
         

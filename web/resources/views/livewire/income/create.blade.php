@@ -19,7 +19,7 @@
 
                         <div class="mb-4">
                             <label for="exampleFormControlInput1"
-                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please enter the name of the item">Name</abbr></label>
+                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please enter the name of income source">Name</abbr></label>
                             <input type="text"
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 id="exampleFormControlInput1" placeholder="Name of the item" wire:model.lazy="income.name" required>
@@ -27,27 +27,27 @@
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput2"
-                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please enter more information about the purchased item">Description</abbr></label>
+                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please enter more information about the income source">Description</abbr></label>
                             <textarea
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 id="exampleFormControlInput2" wire:model.lazy="income.description"
-                                placeholder="More information about the item purchased"></textarea>
+                                placeholder="More information about the income source"></textarea>
                             @error('income.description') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput3"
-                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please enter the price of the item">Price({{ currency_symbol()}})</abbr></label>
+                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please enter the amount earned">Amount({{ currency_symbol()}})</abbr></label>
                             <input type="text"
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                id="exampleFormControlInput3" placeholder="Price of the item" wire:model.lazy="income.price" required>
+                                id="exampleFormControlInput3" placeholder="Amount earned" wire:model.lazy="income.price" required>
                             @error('income.price') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div> 
                         <div class="mb-4">
                             <label for="exampleFormControlInput4"
-                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please mention a category for the item purchased">Tags</abbr></label>
+                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please mention a category for the income source">Tags</abbr></label>
                             <input type="text"
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                id="exampleFormControlInput4" placeholder="Purchase Category" wire:model.lazy="income.tags" list="tags">
+                                id="exampleFormControlInput4" placeholder="Income Source Category" wire:model.lazy="income.tags" list="tags">
                             <datalist id="tags">
                                 @foreach($tags as $tag)
                                     <option value="{{ ucwords($tag->name) }}">

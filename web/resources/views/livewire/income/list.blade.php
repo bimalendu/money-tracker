@@ -107,7 +107,7 @@
                         @endif
                     </tbody>
                 </table>
-                {{ $income->links() }}
+                {{ $incomeRecords->links() }}
                 @if($isModalOpen)
                     @include('livewire.income.create')
                 @endif
