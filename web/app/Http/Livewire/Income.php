@@ -3,26 +3,26 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\Expense as ExpenseModel;
+use App\Models\Income as IncomeModel;
 use App\Models\Tags;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Livewire\WithPagination;
 
-class Expense extends Component
+class Income extends Component
 {
     use WithPagination;
 
     public $isModalOpen = 0, $tags=0, $selDate = '', $searchQuery='', $itemsPerPage = 0;
-    public ExpenseModel $expense;
+    public IncomeModel $income;
 
     protected $rules = [
-        'expense.name' => 'required',
-        'expense.price' => 'required',
-        'expense.user_id' => '',
-        'expense.description' =>'',
-        'expense.on_date' => 'required',
-        'expense.tags' => '',
+        'income.name' => 'required',
+        'income.price' => 'required',
+        'income.user_id' => '',
+        'income.description' =>'',
+        'income.on_date' => 'required',
+        'income.tags' => '',
         
     ];
 
@@ -34,7 +34,7 @@ class Expense extends Component
     
     public function render()
     {
-        $expenses = ExpenseModel::where('user_id', auth()->user()->id)
+        $incomeRecords = IncomeModel::where('user_id', auth()->user()->id)
                     ->when($this->selDate!='', function($query) {
                         $query->whereDate('on_date', $this->selDate);
                     })
@@ -49,12 +49,12 @@ class Expense extends Component
                                                 ->orWhere('tags', 'like', '%'.$this->searchQuery.'%');
                              });
                     });
-        $totalExpenses = $expenses->sum('price');
-        $expenses = $expenses->paginate($this->itemsPerPage);
+        $totalIncome = $incomeRecords->sum('price');
+        $income = $incomeRecords->paginate($this->itemsPerPage);
 
-        return view('livewire.expense.list',[
-            "totalExpenses" => $totalExpenses,
-            "expenses" => $expenses,
+        return view('livewire.income.list',[
+            "totalIncome" => $totalIncome,
+            "incomeRecords" => $incomeRecords,
             "timePeriod" => "Today's",
         ]);
     }
@@ -76,15 +76,15 @@ class Expense extends Component
     }
 
     private function resetCreateForm(){
-        $this->expense = new ExpenseModel;
-        $this->expense->on_date = date('Y-m-d',strtotime("now"));
+        $this->income = new IncomeModel;
+        $this->income->on_date = date('Y-m-d',strtotime("now"));
     }
 
     public function store()
     {
         $this->validate();
 
-        $tag = trim($this->expense->tags);
+        $tag = trim($this->income->tags);
         if(!empty($tag)){
             Tags::updateOrCreate([
                 "name" => $tag,
@@ -96,28 +96,26 @@ class Expense extends Component
             ]);
         }
         
-        session()->flash('message', isset($this->expense->id) ? 'Expense updated.' : 'Expense created.');
-        $this->expense->price = floatval($this->expense->price);
-        $this->expense->user_id = auth()->user()->id;
-        $this->expense->save();
+        session()->flash('message', isset($this->income->id) ? 'Income updated.' : 'Income created.');
+        $this->income->price = floatval($this->income->price);
+        $this->income->user_id = auth()->user()->id;
+        $this->income->save();
 
         $this->closeModalPopover();
         $this->resetCreateForm();
     }
 
-    public function edit($expense_id)
+    public function edit($income_id)
     {
-        $expense = ExpenseModel::findOrFail($expense_id);
-        $this->expense = $expense;
-        $this->expense->price = round($this->expense->price,2);
+        $income = IncomeModel::findOrFail($income_id);
+        $this->income = $income;
+        $this->income->price = round($this->income->price,2);
         $this->openModalPopover();
     }
     
-    public function delete($expense_id)
+    public function delete($income_id)
     {
-        ExpenseModel::find($expense_id)->delete();
-        session()->flash('message', 'Expense deleted.');
+        IncomeModel::find($income_id)->delete();
+        session()->flash('message', 'Income deleted.');
     }
-
-    
 }
