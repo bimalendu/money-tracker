@@ -68,7 +68,7 @@ class Income extends Component
     {
         $this->isModalOpen = true;
         $this->tags = Tags::where('user_id', auth()->user()->id)
-                      ->where('type', 1)
+                      ->where('source_type', 1)
                       ->get();
     }
 
@@ -91,12 +91,12 @@ class Income extends Component
             Tags::updateOrCreate([
                 "name" => $tag,
                 "user_id" => auth()->user()->id,
-                "type" => 1,
+                "source_type" => 1,
             ],
             [
                 "name" => $tag,
                 "user_id" => auth()->user()->id,
-                "type" => 1,
+                "source_type" => 1,
             ]);
         }
         

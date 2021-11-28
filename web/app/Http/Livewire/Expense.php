@@ -68,7 +68,7 @@ class Expense extends Component
     {
         $this->isModalOpen = true;
         $this->tags = Tags::where('user_id', auth()->user()->id)
-                      ->where('type', 0)
+                      ->where('source_type', 0)
                       ->get();
     }
 
@@ -91,12 +91,12 @@ class Expense extends Component
             Tags::updateOrCreate([
                 "name" => $tag,
                 "user_id" => auth()->user()->id,
-                "type" => 0,
+                "source_type" => 0,
             ],
             [
                 "name" => $tag,
                 "user_id" => auth()->user()->id,
-                "type" => 0,
+                "source_type" => 0,
             ]);
         }
         
