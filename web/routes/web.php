@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Expense;
+use App\Http\Livewire\Income;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::get('/expenses', Expense::class)->name('expenses');
+    Route::get('/income', Income::class)->name('income');
 });
