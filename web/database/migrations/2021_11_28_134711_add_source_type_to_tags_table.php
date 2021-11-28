@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTypeToTagsTable extends Migration
+class AddSourceTypeToTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddTypeToTagsTable extends Migration
     public function up()
     {
         Schema::table('tags', function (Blueprint $table) {
-            $table->unsignedTinyInteger('type')->default(0)->comment("Income: 1, Expense: 0");
+            $table->unsignedTinyInteger('source_type')->default(0)->comment("Income: 1, Expense: 0");
         });
     }
 
@@ -26,7 +26,7 @@ class AddTypeToTagsTable extends Migration
     public function down()
     {
         Schema::table('tags', function (Blueprint $table) {
-            $table->dropColumn('type');
+            $table->dropColumn('source_type');
         });
     }
 }
