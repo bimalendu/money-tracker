@@ -81,7 +81,7 @@
                             <td colspan="3" class="border">&nbsp;</td>
                         </tr>
                         <tr>
-                            <td colspan="1" class="px-4 py-2 text-right border"><strong> {{ __('Total Incomes') }}</stromg></td>
+                            <td colspan="1" class="px-4 py-2 text-right border"><strong> {{ __('Total Income') }}</stromg></td>
                             <td colspan="2" class="px-4 py-2 border"> 
                                 
                                     <strong>
