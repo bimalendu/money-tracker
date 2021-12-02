@@ -7,7 +7,7 @@ use App\Models\Expense;
 
 class Dashboard extends Component
 {
-   public ExpenseModel $expense;
+   public Expense $expense;
 
     public function render()
     {
