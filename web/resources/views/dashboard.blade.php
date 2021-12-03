@@ -1,16 +1,47 @@
-<x-app-layout>
-    <x-slot name="header">
+<div>
+<x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('Overview') }}
-        </h2>
-    </x-slot>
+         {{ __('Overview ') }} 
+        </h2> 
+</x-slot>
 
-    <div class="py-12">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
-                Graphs to be populated here
+<div class="py-12">
+    <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
+            <div class="py-12">
+                <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                        <p class="mt-5">
+                          <label for="year">Year: </label>
+                          <select id="year" wire:model="year">
+                              @php
+                                for($i=1950;$i<=date('Y');$i++){
+                                  echo '<option value="'.$i.'">'.$i.'</option>';
+                                }
+                              @endphp                   
+                          </select>
+                        </p>
+                        
+                        <div id="myDiv"></div>                      
+                </div>
             </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.1.1/d3.min.js" integrity="sha512-COTaPOlz12cG4fSfcBsxZsjauBAyldqp+8FQUM/dZHm+ts/jR4AFoJhCqxy8K10Jrf3pojfsbq7fAPTb1XaVkg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-</x-app-layout>
+</div>
+
+<script src='https://cdn.plot.ly/plotly-2.6.3.min.js'></script>
+<script>
+
+var data = {!! $expenses !!};
+
+var layout = {
+  title: "{{ $title }}",
+  margin: {"t": 30, "b": 30, "l": 0, "r": 0},
+  showlegend: false,
+  grid: {rows: 1, columns: 2}
+};
+
+
+Plotly.newPlot('myDiv', data, layout);
+
+</script>
+</div>

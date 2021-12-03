@@ -4,25 +4,70 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Expense;
+use stdClass;
+use Carbon\Carbon;
 
 class Dashboard extends Component
 {
-   public Expense $expense;
+    public $year= null;
+
+    function mount()
+    {
+        $this->year = $this->year ?? date("Y");
+    }
 
     public function render()
     {
-        $expenses = Expense::where('user_id', auth()->user()->id)->get()->toArray();
-        $data = [];
-        foreach($expenses as $expense){
-            $record = [];
-            $record['date'] = $expense['on_date'];
-            $record['amount'] = $expense['price']; 
+        $expenseData = Expense::where('user_id', auth()->user()->id)
+                    ->whereYear('created_at',$this->year)
+                    ->orderBy('created_at')
+                    ->get()
+                    ->groupBy(function($date) {
+                        return Carbon::parse($date->created_at)->format('m');
+                    })
+                    ->toArray();
 
-            $data[] = $record;
+        
+        
+        $records = [];
+        $column = 0;
+
+        foreach($expenseData as $month_key => $expenses){
+            
+            $data = new stdClass();
+
+            foreach($expenses as $expense){
+                $data->values[] = $expense['price'];
+                $data->labels[] = $expense['tags'];
+            }
+
+            $data->domain = new stdClass();
+            $data->domain->column = $column;
+            $data->type = "pie";
+            $data->title = new StdClass();
+            $data->title->text = "Expenses for ".date('M Y',strtotime($this->year."-".$month_key));
+            
+            $data->hole = .6;
+            $data->textposition = "inside";
+            $data->hoverinfo = 'label+percent';
+            $data->automargin = true;
+            $data->insidetextorientation = "radial";
+
+            $records[] = $data;     
+            $column++;
+
         }
         
+        $title = "Annual Expense for ".$this->year;
+
         return view('dashboard',[
-            "expenses" => json_encode($data),
+            "expenses" => json_encode($records),
+            "title" => $title,
         ]);
+    }
+
+    public function updateYear($year)
+    {
+        $this->year = $year;
     }
 }
