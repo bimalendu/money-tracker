@@ -9,8 +9,8 @@ use Carbon\Carbon;
 
 class Dashboard extends Component
 {
-    public $year= null;
-
+    public $year= null, $graphData=null, $graphTitle = null;
+    
     function mount()
     {
         $this->year = $this->year ?? date("Y");
@@ -58,16 +58,12 @@ class Dashboard extends Component
 
         }
         
-        $title = "Annual Expense for ".$this->year;
+        $this->graphTitle = "Annual Expense for ".$this->year;
+        $this->graphData = json_encode($records);
 
         return view('dashboard',[
-            "expenses" => json_encode($records),
-            "title" => $title,
+            "expenses" => $this->graphData,
+            "title" => $this->graphTitle,
         ]);
-    }
-
-    public function updateYear($year)
-    {
-        $this->year = $year;
     }
 }

@@ -43,5 +43,22 @@ var layout = {
 
 Plotly.newPlot('myDiv', data, layout);
 
+document.addEventListener("DOMContentLoaded", () => {
+
+        Livewire.hook('element.updated', (el, component) => {
+            layout.title = component.serverMemo.data.graphTitle;
+            let graphData = JSON.parse(component.serverMemo.data.graphData);
+
+            if(graphData.length > 0){
+                Plotly.newPlot('myDiv', graphData, layout);
+            }else{
+              document.getElementById('myDiv').innerHTML = `<p class="mt-5">
+              Sorry, no data is available for this year.
+              </p>`;
+            }
+            
+        });
+
+});
 </script>
 </div>
