@@ -35,17 +35,18 @@ class Dashboard extends Component
         foreach($expenseData as $month_key => $expenses){
             
             $data = new stdClass();
-
+            $total_amount = 0;
             foreach($expenses as $expense){
                 $data->values[] = $expense['price'];
                 $data->labels[] = $expense['tags'];
+                $total_amount += $expense['price'];
             }
 
             $data->domain = new stdClass();
             $data->domain->column = $column;
             $data->type = "pie";
             $data->title = new StdClass();
-            $data->title->text = "Expenses for ".date('M Y',strtotime($this->year."-".$month_key));
+            $data->title->text = "Expenses for ".date('M Y',strtotime($this->year."-".$month_key))."<br>Total: ".format_money($total_amount);
             
             $data->hole = .6;
             $data->textposition = "inside";

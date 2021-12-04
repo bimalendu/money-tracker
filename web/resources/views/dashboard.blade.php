@@ -11,14 +11,15 @@
             <div class="py-12">
                 <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                         <p class="mt-5">
-                          <label for="year">Year: </label>
-                          <select id="year" wire:model="year">
-                              @php
-                                for($i=1950;$i<=date('Y');$i++){
-                                  echo '<option value="'.$i.'">'.$i.'</option>';
-                                }
-                              @endphp                   
-                          </select>
+                          <label for="selYear">Year: </label>
+                          <input type="number" id="selYear" wire:model="year" list="year" max="{{ date('Y') }}" min="1900" />
+                          <datalist id="year">
+                                @php
+                                  for($i=1950;$i<=date('Y');$i++){
+                                    echo '<option value="'.$i.'">';
+                                  }
+                                @endphp
+                          </datalist>
                         </p>
                         
                         <div id="myDiv"></div>                      
