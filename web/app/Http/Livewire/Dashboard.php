@@ -69,16 +69,21 @@ class Dashboard extends Component
                 
                 
             }
-            $x[] = $month_key;
+            $val = \DateTime::createFromFormat('!m', $month_key);
+            $month  = $val->format('F');
+            $x[] = $month.' '.$this->year;
             $y[] = round($total_value);
         }
 
        
         $trace1 =  new stdClass();
         $trace1->type = "bar";
-        $trace1->name = "Expense";
+        $trace1->name = "Expense (".currency_symbol().")";
         $trace1->x =  $x;
         $trace1->y =  $y;
+        $trace1->marker = new stdClass();
+        $trace1->marker->color = 'rgb(255,0,0)';
+        $trace1->marker->opacity = 0.7;
        
         $x = [];
         $y = [];
@@ -87,18 +92,23 @@ class Dashboard extends Component
             foreach($values as $value){
                 $total_value += $value['price'];
             }
-            $x[] = $month_key;
+            $val = \DateTime::createFromFormat('!m', $month_key);
+            $month  = $val->format('F');
+            $x[] = $month.' '.$this->year;
             $y[] = round($total_value);
         }
 
         $trace2 =  new stdClass();
         $trace2->type = "bar";
-        $trace2->name = "Income";
+        $trace2->name = "Income (".currency_symbol().")";
         $trace2->x =  $x;
         $trace2->y =  $y;
+        $trace2->marker = new stdClass();
+        $trace2->marker->color = 'rgb(204,204,204)';
+        $trace2->marker->opacity = 0.7;
         
         
-        $data = [ $trace2, $trace1 ];
+        $data = [ $trace1, $trace2 ];
         return $data;       
     }
 

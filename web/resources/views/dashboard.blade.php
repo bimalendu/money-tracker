@@ -53,7 +53,7 @@ var setLayoutGrid = (data) =>{
 };
 
 var data = {!! $data !!};
-
+var modeConfig = {displayModeBar: false};
 var layout = {
   title: "{{ $title }}",
   margin: {"t": 100, "b": 30, "l": 0, "r": 0},
@@ -63,7 +63,7 @@ var layout = {
 
 if(data.length > 0){
   setLayoutGrid(data);
-  Plotly.newPlot('myDiv', data, layout);  
+  Plotly.newPlot('myDiv', data, layout, modeConfig);  
 }
 
 
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 setLayoutGrid(graphData);
                 layout.showlegend = false;
               }          
-              Plotly.newPlot('myDiv', graphData, layout);
+              Plotly.newPlot('myDiv', graphData, layout, modeConfig);
                 
             }else{
               document.getElementById('myDiv').innerHTML = `<p class="mt-5">
