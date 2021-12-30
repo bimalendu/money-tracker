@@ -19,7 +19,7 @@
 
                         <div class="mb-4">
                             <label for="exampleFormControlInput1"
-                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please enter the name of income source">Name</abbr></label>
+                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please enter the name of income source">{{ __('Name') }}</abbr></label>
                             <input type="text"
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 id="exampleFormControlInput1" placeholder="Name of the item" wire:model.lazy="income.name" required>
@@ -27,7 +27,7 @@
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput2"
-                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please enter more information about the income source">Description</abbr></label>
+                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please enter more information about the income source">{{ __('Description') }}</abbr></label>
                             <textarea
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 id="exampleFormControlInput2" wire:model.lazy="income.description"
@@ -36,7 +36,7 @@
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput3"
-                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please enter the amount earned">Amount({{ currency_symbol()}})</abbr></label>
+                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please enter the amount earned">{{ __('Amount') }}({{ currency_symbol()}})</abbr></label>
                             <input type="text"
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 id="exampleFormControlInput3" placeholder="Amount earned" wire:model.lazy="income.price" required>
@@ -44,7 +44,7 @@
                         </div> 
                         <div class="mb-4">
                             <label for="exampleFormControlInput4"
-                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please mention a category for the income source">Tags</abbr></label>
+                                class="block mb-2 text-sm font-bold text-gray-700"><abbr title="Please mention a category for the income source">{{ __('Tags') }}</abbr></label>
                             <input type="text"
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 id="exampleFormControlInput4" placeholder="Income Source Category" wire:model.lazy="income.tags" list="tags">
@@ -57,7 +57,7 @@
                         </div>      
                         <div class="mb-4">
                             <label for="exampleFormControlInput5"
-                                class="block mb-2 text-sm font-bold text-gray-700">Purchased on</label>
+                                class="block mb-2 text-sm font-bold text-gray-700">{{ __('Earned on') }}</label>
                             <input type="date"
                                 class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 id="exampleFormControlInput5" placeholder="Date" wire:model.lazy="income.on_date" required>
