@@ -44,16 +44,16 @@ class Dashboard extends Component
 
     public function getComparisonGraphData(){
         $expenseData = Expense::Where('user_id', auth()->user()->id)
-                    ->whereYear('created_at',$this->year)
-                    ->orderBy('created_at')
+                    ->whereYear('on_date',$this->year)
+                    ->orderBy('on_date')
                     ->get()
                     ->groupBy(function($date) {
                         return Carbon::parse($date->on_date)->format('m');
                     })
                     ->toArray();
         $incomeData = Income::Where('user_id', auth()->user()->id)
-                    ->whereYear('created_at',$this->year)
-                    ->orderBy('created_at')
+                    ->whereYear('on_date',$this->year)
+                    ->orderBy('on_date')
                     ->get()
                     ->groupBy(function($date) {
                         return Carbon::parse($date->on_date)->format('m');
@@ -115,11 +115,11 @@ class Dashboard extends Component
     public function getExpenseGraphData()
     {
         $expenseData = Expense::where('user_id', auth()->user()->id)
-                    ->whereYear('created_at',$this->year)
-                    ->orderBy('created_at')
+                    ->whereYear('on_date',$this->year)
+                    ->orderBy('on_date')
                     ->get()
                     ->groupBy(function($date) {
-                        return Carbon::parse($date->created_at)->format('m');
+                        return Carbon::parse($date->on_date)->format('m');
                     })
                     ->toArray();
          
@@ -130,11 +130,11 @@ class Dashboard extends Component
     public function getIncomeGraphData()
     {
         $incomeData = Income::where('user_id', auth()->user()->id)
-                    ->whereYear('created_at',$this->year)
-                    ->orderBy('created_at')
+                    ->whereYear('on_date',$this->year)
+                    ->orderBy('on_date')
                     ->get()
                     ->groupBy(function($date) {
-                        return Carbon::parse($date->created_at)->format('m');
+                        return Carbon::parse($date->on_date)->format('m');
                     })
                     ->toArray();
          
