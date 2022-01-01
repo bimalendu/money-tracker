@@ -26,7 +26,10 @@ class Dashboard extends Component
         if ($this->graphType == 'expenses' || $this->graphType == '') {
             $records = $this->getExpenseGraphData();
             $this->graphTitle = "Annual Expense for ".$this->year;
-        } else {
+        } else if($this->graphType=='compare'){
+            $records = $this->getComparisonGraphData();
+            $this->graphTitle = "Income vs Expense for ".$this->year;
+        }else {
             $records = $this->getIncomeGraphData();
             $this->graphTitle = "Annual Income for ".$this->year;
         }
@@ -39,14 +42,84 @@ class Dashboard extends Component
         ]);
     }
 
+    public function getComparisonGraphData(){
+        $expenseData = Expense::Where('user_id', auth()->user()->id)
+                    ->whereYear('on_date',$this->year)
+                    ->orderBy('on_date')
+                    ->get()
+                    ->groupBy(function($date) {
+                        return Carbon::parse($date->on_date)->format('m');
+                    })
+                    ->toArray();
+        $incomeData = Income::Where('user_id', auth()->user()->id)
+                    ->whereYear('on_date',$this->year)
+                    ->orderBy('on_date')
+                    ->get()
+                    ->groupBy(function($date) {
+                        return Carbon::parse($date->on_date)->format('m');
+                    })
+                    ->toArray();
+
+        $x = [];
+        $y = [];            
+        $total_value = 0;
+        foreach($expenseData as $month_key => $values ){
+            foreach($values as $value){
+                $total_value += $value['price'];
+                
+                
+            }
+            $val = \DateTime::createFromFormat('!m', $month_key);
+            $month  = $val->format('F');
+            $x[] = $month.' '.$this->year;
+            $y[] = round($total_value);
+        }
+
+       
+        $trace1 =  new stdClass();
+        $trace1->type = "bar";
+        $trace1->name = "Expense (".currency_symbol().")";
+        $trace1->x =  $x;
+        $trace1->y =  $y;
+        $trace1->marker = new stdClass();
+        $trace1->marker->color = 'rgb(255,0,0)';
+        $trace1->marker->opacity = 0.7;
+       
+        $x = [];
+        $y = [];
+        $total_value = 0;
+        foreach($incomeData as $month_key => $values ){
+            foreach($values as $value){
+                $total_value += $value['price'];
+            }
+            $val = \DateTime::createFromFormat('!m', $month_key);
+            $month  = $val->format('F');
+            $x[] = $month.' '.$this->year;
+            $y[] = round($total_value);
+        }
+
+        $trace2 =  new stdClass();
+        $trace2->type = "bar";
+        $trace2->name = "Income (".currency_symbol().")";
+        $trace2->x =  $x;
+        $trace2->y =  $y;
+        $trace2->marker = new stdClass();
+        $trace2->marker->color = 'rgb(204,204,204)';
+        $trace2->marker->opacity = 0.7;
+        
+        
+        $data = [ $trace1, $trace2 ];
+        return $data;       
+    }
+
     public function getExpenseGraphData()
     {
         $expenseData = Expense::where('user_id', auth()->user()->id)
-                    ->whereYear('created_at',$this->year)
-                    ->orderBy('created_at')
+                    ->whereYear('on_date',$this->year)
+                    ->orderBy('on_date')
                     ->get()
                     ->groupBy(function($date) {
-                        return Carbon::parse($date->created_at)->format('m');
+                        return Carbon::parse($date->on_date)->format('m');
                     })
                     ->toArray();
          
@@ -57,11 +130,11 @@ class Dashboard extends Component
     public function getIncomeGraphData()
     {
         $incomeData = Income::where('user_id', auth()->user()->id)
-                    ->whereYear('created_at',$this->year)
-                    ->orderBy('created_at')
+                    ->whereYear('on_date',$this->year)
+                    ->orderBy('on_date')
                     ->get()
                     ->groupBy(function($date) {
-                        return Carbon::parse($date->created_at)->format('m');
+                        return Carbon::parse($date->on_date)->format('m');
                     })
                     ->toArray();
          

@@ -24,8 +24,9 @@
                         <span class="pl-10 mt-5">
                           <label for="selType">Source: </label>
                           <select id="selType" wire:model="graphType">
-                            <option value="income">Income</option>
                             <option value="expenses">Expense</option>
+                            <option value="income">Income</option>
+                            <option value="compare">Income vs Expense</option>
                           </select>
                         </span>
                         <div id="myDiv"></div>
@@ -52,7 +53,7 @@ var setLayoutGrid = (data) =>{
 };
 
 var data = {!! $data !!};
-
+var modeConfig = {displayModeBar: false};
 var layout = {
   title: "{{ $title }}",
   margin: {"t": 100, "b": 30, "l": 0, "r": 0},
@@ -62,7 +63,7 @@ var layout = {
 
 if(data.length > 0){
   setLayoutGrid(data);
-  Plotly.newPlot('myDiv', data, layout);  
+  Plotly.newPlot('myDiv', data, layout, modeConfig);  
 }
 
 
@@ -76,8 +77,15 @@ document.addEventListener("DOMContentLoaded", () => {
             let graphData = JSON.parse(component.serverMemo.data.graphData);
             
             if(graphData.length > 0){
-              setLayoutGrid(graphData);          
-              Plotly.newPlot('myDiv', graphData, layout);
+              if(graphData[0].type=='bar'){
+                layout.showlegend = true;
+                layout.grid = {};
+
+              }else{
+                setLayoutGrid(graphData);
+                layout.showlegend = false;
+              }          
+              Plotly.newPlot('myDiv', graphData, layout, modeConfig);
                 
             }else{
               document.getElementById('myDiv').innerHTML = `<p class="mt-5">
