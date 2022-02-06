@@ -62,12 +62,10 @@ class Dashboard extends Component
 
         $x = [];
         $y = [];            
-        $total_value = 0;
         foreach($expenseData as $month_key => $values ){
+            $total_value = 0;
             foreach($values as $value){
                 $total_value += $value['price'];
-                
-                
             }
             $val = \DateTime::createFromFormat('!m', $month_key);
             $month  = $val->format('F');
@@ -87,8 +85,9 @@ class Dashboard extends Component
        
         $x = [];
         $y = [];
-        $total_value = 0;
+        
         foreach($incomeData as $month_key => $values ){
+            $total_value = 0;
             foreach($values as $value){
                 $total_value += $value['price'];
             }
