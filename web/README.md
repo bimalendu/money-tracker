@@ -25,7 +25,7 @@ Thank you for considering to contribute to MoneyTracker. This space will be upda
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within MoneyTracker, please send an e-mail to Bimalendu Behera via [bimalendu@ekakshya.com](mailto:bimalendu@ekakshya.com). All security vulnerabilities will be addressed promptly.
+If you discover a security vulnerability within MoneyTracker, please send an e-mail to Bimalendu Behera via [bimalendu@forkics.com](mailto:bimalendu@forkics.com). All security vulnerabilities will be addressed promptly.
 
 ## License
 
