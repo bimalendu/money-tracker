@@ -35,7 +35,6 @@ class Dashboard extends Component
         }
 
         $this->graphData = json_encode($records);
-
         return view('dashboard', [
             "data" => $this->graphData,
             "title" => $this->graphTitle,
@@ -146,6 +145,7 @@ class Dashboard extends Component
     {
         $records = [];
         $column = 0;
+        $row = 0;
 
         foreach($data as $month_key => $values){
             
@@ -158,10 +158,11 @@ class Dashboard extends Component
             }
 
             $data->domain = new stdClass();
+            $data->domain->row = $row;
             $data->domain->column = $column;
             $data->type = "pie";
             $data->title = new StdClass();
-            $data->title->text = ucwords($this->graphType)." for ".date('M Y',strtotime($this->year."-".$month_key))."<br>Total: ".format_money($total_amount);
+            $data->title->text = date('M Y',strtotime($this->year."-".$month_key))."<br>Total: ".format_money($total_amount);
             
             $data->hole = .6;
             $data->textposition = "inside";
@@ -171,7 +172,11 @@ class Dashboard extends Component
 
             $records[] = $data;     
             $column++;
-
+            
+            if($column %3 == 0){
+                $row++;
+                $column = 0;
+            }
         }
         return $records;
     }

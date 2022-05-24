@@ -29,7 +29,7 @@
                             <option value="compare">Income vs Expense</option>
                           </select>
                         </span>
-                        <div id="myDiv"></div>
+                        <div id="myDiv" height="100%" width="100%"></div>
                 </div>
             </div>
         </div>
@@ -38,12 +38,20 @@
 
 <script src='https://cdn.plot.ly/plotly-2.6.3.min.js'></script>
 <script>
+var data = {!! $data !!};
+var modeConfig = {displayModeBar: false};
+var layout = {
+  title: "{{ $title }}",
+  margin: {"t": 80, "b": 0, "l": 0, "r": 0},
+  showlegend: false,
+  grid: {rows: 1, columns: 3}
+};
 
 var setLayoutGrid = (data) =>{
                 
     layout.grid.rows = Math.ceil(data.length/3);
 
-    if(data.length%3 == 0){
+    if(data.length%3 == 0 || data.length > 3){
       layout.grid.columns = 3;
     }else if(data.length%2 == 0){
       layout.grid.columns = 2;
@@ -52,14 +60,7 @@ var setLayoutGrid = (data) =>{
     }
 };
 
-var data = {!! $data !!};
-var modeConfig = {displayModeBar: false};
-var layout = {
-  title: "{{ $title }}",
-  margin: {"t": 100, "b": 30, "l": 0, "r": 0},
-  showlegend: false,
-  grid: {rows: 1, columns: 3}
-};
+
 
 if(data.length > 0){
   setLayoutGrid(data);
@@ -84,7 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
               }else{
                 setLayoutGrid(graphData);
                 layout.showlegend = false;
-              }          
+              }
+                     
               Plotly.newPlot('myDiv', graphData, layout, modeConfig);
                 
             }else{
